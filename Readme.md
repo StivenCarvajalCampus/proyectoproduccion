@@ -8,3 +8,7 @@
 
    Con el sistema de costos de producción en sublimación, SubliTransfer podrá tomar decisiones informadas para optimizar su producción, maximizar los márgenes de ganancia y gestionar eficientemente el inventario. De esta forma, la empresa estará mejor posicionada para mantener su competitividad en el mercado y lograr una re inversión estratégica en el desarrollo de nuevos productos y servicios.
 
+   **Diagrama**
+
+   ![image-20230717092047292](C:\Users\Usuario 1\AppData\Roaming\Typora\typora-user-images\image-20230717092047292.png)
+

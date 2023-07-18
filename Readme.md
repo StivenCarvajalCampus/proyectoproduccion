@@ -10,5 +10,5 @@
 
    **Diagrama**
 
-   
+   ![image-20230717092047292](https://github.com/StivenCarvajalCampus/proyectoproduccion/blob/master/imagenes/Diagrama%20en%20blanco.png)
 

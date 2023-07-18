@@ -10,5 +10,5 @@
 
    **Diagrama**
 
-   ![image-20230717092047292](C:\Users\Usuario 1\AppData\Roaming\Typora\typora-user-images\image-20230717092047292.png)
+   
 

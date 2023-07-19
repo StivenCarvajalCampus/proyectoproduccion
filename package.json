@@ -1,0 +1,32 @@
+{
+  "name": "proyectoproduccion",
+  "version": "1.0.0",
+  "description": "​\t**Objetivos**",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev":"nodemon node --quiet app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StivenCarvajalCampus/proyectoproduccion.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StivenCarvajalCampus/proyectoproduccion/issues"
+  },
+  "homepage": "https://github.com/StivenCarvajalCampus/proyectoproduccion#readme",
+  "devDependencies": {
+    "class-transformer": "0.5.1",
+    "class-validator": "0.14.0",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "jose": "4.14.4",
+    "mysql2": "3.5.2",
+    "nodemon": "3.0.1",
+    "reflect-metadata": "0.1.13",
+    "typescript": "5.1.6"
+  }
+}

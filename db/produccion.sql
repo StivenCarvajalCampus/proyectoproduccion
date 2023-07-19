@@ -45,3 +45,12 @@ ADD CONSTRAINT fk_categoria FOREIGN KEY (id_producto) REFERENCES productos(id_pr
 ALTER TABLE inventario ADD CONSTRAINT fk_inventario FOREIGN KEY(id_producto) REFERENCES productos(id_producto);
 ALTER TABLE registros_produccion ADD CONSTRAINT fk_registros FOREIGN KEY (id_producto) REFERENCES productos (id_producto);
 ALTER TABLE registros_produccion ADD CONSTRAINT fk_insumos_r FOREIGN KEY (id_insumos) REFERENCES insumos (id_insumo);
+ALTER TABLE `registros_produccion` CHANGE `camtidad_producida` `cantidad_producida` INT(20) NULL DEFAULT NULL;
+
+/* Inserciones a base de datos*/
+
+INSERT INTO productos (nombre_producto, descripcion, precio_venta, unidad_medida) VALUES ('mug 11oz','mug blanco 11 oz','10.000','36');
+INSERT INTO categoria_producto (nombre_categoria, id_producto) VALUES ('Mugs', '1');
+INSERT INTO inventario (cantidad_stock, id_producto) VALUES ('36','1');
+INSERT INTO insumos (nombre_insumo, unidad_medida, precio_unidad, fecha, proveedor) VALUES('mugs','36','3.500','2023-07-19','Ao importaciones');
+INSERT INTO registros_produccion (fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos) VALUES('2023-07-19','1','5','7.500','1');

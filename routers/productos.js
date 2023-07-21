@@ -35,7 +35,7 @@ storageProductos.post("/",(req,res)=>{
         }
     )
 })
-storageProductos.put('/:id', (req,res)=>{
+storageProductos.put('/:id_producto', (req,res)=>{
     const id_producto = req.params.id_producto;
     const {nombre_producto, descripcion, precio_venta, unidad_medida}=req.body;
     conex.query(`UPDATE productos SET nombre_producto=?, descripcion=?, precio_venta=?, unidad_medida=? WHERE id_producto=?;`,
@@ -51,5 +51,24 @@ storageProductos.put('/:id', (req,res)=>{
 
     )
 
+})
+
+storageProductos.delete('/deleteproductos',(req,res)=>{
+    const id_producto = req.body.idDelete;
+    conex.query(
+        `DELETE FROM productos WHERE id_producto = ${id_producto};`,
+        (err,data,fill)=>{
+            if(err){
+                const errorMessage = `Error al eliminar la data`;
+                res.status(500).send(err);
+            }else{
+                if (data.affectedRows === 0){
+                    res.status(404).send("el producto solicitado no existe");
+                }else{
+                    res.send("Los datos han sido eliminados con exito");
+                }
+            }
+        }
+    )
 })
 export default storageProductos;

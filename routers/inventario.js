@@ -36,9 +36,11 @@ storageInventario.post("/",(req,res)=>{
     )
 })
 storageInventario.put('/:id', (req,res)=>{
-    const id_inventario = req.params.id_inventario;
+    const id_inventario = req.params.id;
     const {cantidad_stock,id_producto}=req.body;
-    conex.query(`UPDATE inventario SET cantidad_stock=?,id_producto=? WHERE id_inventario=?;`,
+    console.log(id_inventario, cantidad_stock, id_producto);
+    conex.query(
+        /*SQL*/`UPDATE inventario SET cantidad_stock=?,id_producto=? WHERE id_inventario=?;`,
     [cantidad_stock,id_producto,id_inventario],
     (error, result) => {
         if (error) {

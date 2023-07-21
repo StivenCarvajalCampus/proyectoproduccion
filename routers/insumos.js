@@ -35,7 +35,7 @@ storageInsumos.post("/",(req,res)=>{
         }
     )
 })
-storageInsumos.put('/:id', (req,res)=>{
+storageInsumos.put('/:id_insumo', (req,res)=>{
     const id_insumo = req.params.id_insumo;
     const {nombre_insumo, unidad_medida, precio_unidad, fecha, proveedor}=req.body;
     conex.query(`UPDATE insumos SET nombre_insumo=?, unidad_medida=?, precio_unidad=?, fecha=?, proveedor=? WHERE id_insumo=?;`,
@@ -51,5 +51,24 @@ storageInsumos.put('/:id', (req,res)=>{
 
     )
 
+})
+storageInsumos.delete('/deleteinsumo',(req,res)=>{
+    const id_insumo = req.body.idDelete;
+    console.log(id_insumo);
+    conex.query(
+        `DELETE FROM insumos WHERE id_insumo = ${id_insumo};`,
+        (err,data,fill)=>{
+            if(err){
+                const errorMessage = `Error al eliminar la data`;
+                res.status(500).send(err);
+            }else{
+                if (data.affectedRows === 0){
+                    res.status(404).send("el insumo solicitado no existe");
+                }else{
+                    res.send("Los datos han sido eliminados con exito");
+                }
+            }
+        }
+    )
 })
 export default storageInsumos;

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
+import proxyProductos from "../middleware/Proxyproductos.js";
 
 let storageProductos = Router();
 dotenv.config();
@@ -20,7 +21,7 @@ storageProductos.get("/", (req,res)=>{
     );
 
 })
-storageProductos.post("/",(req,res)=>{
+storageProductos.post("/",proxyProductos,(req,res)=>{
     const {nombre_producto, descripcion, precio_venta, unidad_medida}=req.body;
 
     conex.query(`INSERT INTO productos (nombre_producto, descripcion, precio_venta, unidad_medida) VALUES (?,?,?,?)`,

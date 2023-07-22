@@ -5,7 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev":"nodemon node --quiet app.js"
+    "dev":"nodemon node --quiet app.js",
+    "tsc":"tsc -w"
   },
   "repository": {
     "type": "git",

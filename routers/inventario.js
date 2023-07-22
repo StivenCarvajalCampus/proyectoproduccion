@@ -1,6 +1,7 @@
 import { Router, query } from "express";
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
+import proxyInventarios from "../middleware/Proxyinventarios.js";
 
 let storageInventario = Router();
 dotenv.config();
@@ -20,7 +21,7 @@ storageInventario.get("/", (req,res)=>{
     );
 
 })
-storageInventario.post("/",(req,res)=>{
+storageInventario.post("/",proxyInventarios,(req,res)=>{
     const {cantidad_stock,id_producto}=req.body;
 
     conex.query(`INSERT INTO inventario (cantidad_stock, id_producto) VALUES (?,?)`,

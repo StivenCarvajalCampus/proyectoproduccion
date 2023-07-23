@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Expose, Type, Transform } from 'class-transformer';
-import { IsNotEmpty, IsDate } from 'class-validator';
+import { IsNotEmpty, IsDate, IsDefined } from 'class-validator';
 export class Registros {
     constructor(id_registro, fecha, id_producto, cantidad_producida, costo_total_producto, id_insumos) {
         this.id_registro = id_registro;
@@ -21,6 +21,7 @@ export class Registros {
 }
 __decorate([
     Expose({ name: 'id_registro' }),
+    IsDefined({ message: () => { throw { status: 400, message: "El campo id_registros es obligatorio" }; } }),
     Transform(({ value }) => {
         if (Math.floor(value) && typeof value === 'number')
             return Math.floor(value);
@@ -44,6 +45,7 @@ __decorate([
         return fecha;
     }),
     Expose({ name: 'id_producto' }),
+    IsDefined({ message: () => { throw { status: 400, message: "El campo id_producto es obligatorio" }; } }),
     Transform(({ value }) => {
         if (Math.floor(value) && typeof value === 'number')
             return Math.floor(value);

@@ -1,10 +1,11 @@
 import {Expose, Type , Transform} from 'class-transformer';
-import {  IsString, IsNotEmpty, Matches,IsNumber,IsDate } from 'class-validator';
+import {  IsNotEmpty, IsDate,IsDefined } from 'class-validator';
 
 
 export class Registros{
 
-    @Expose({name: 'id_registro'})
+    @Expose({name: 'id_registro'}) 
+    @IsDefined({message:()=>{throw{status:400,message:"El campo id_registros es obligatorio"}} })
     @Transform(
         ({value})=>{
             if(Math.floor(value) && typeof value === 'number') return Math.floor(value);
@@ -25,6 +26,7 @@ export class Registros{
       return fecha;
     })
     @Expose({name: 'id_producto'})
+    @IsDefined({message:()=>{throw{status:400,message:"El campo id_producto es obligatorio"}} })
     @Transform(
         ({value})=>{
             if(Math.floor(value) && typeof value === 'number') return Math.floor(value);

@@ -1,10 +1,11 @@
 import {Expose, Type , Transform} from 'class-transformer';
-import {  IsString, IsNotEmpty, Matches,IsNumber,IsDate } from 'class-validator';
+import {  IsString, IsNotEmpty, Matches,IsNumber,IsDate, isNumber, isNotEmpty, validate, IsDefined } from 'class-validator';
 
 
 export class Insumos{
-
+    
     @Expose({name: 'id_insumo'})
+    @IsDefined({message:()=>{throw{status:400,message:"El campo id_insumo debe ser valido"}} })
     @Transform(
         ({value})=>{
             if(Math.floor(value) && typeof value === 'number') return Math.floor(value);
@@ -46,7 +47,8 @@ export class Insumos{
     })
     @IsNotEmpty({ message: "El campo 'fecha' no puede estar vacío." })
     @IsDate({ message: "El campo 'fecha' debe ser una fecha válida." })
-    fecha: Date;
+    public fecha: Date;
+    
 
     @Expose({name:'proveedor'})
     @IsString()
@@ -70,4 +72,7 @@ export class Insumos{
         this.fecha = fecha;
         this.proveedor = proveedor;
     }
+}class idInsumo {
+    @IsNotEmpty()
+    id_insumo:number
 }

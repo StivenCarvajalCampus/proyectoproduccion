@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Expose, Type, Transform } from 'class-transformer';
-import { IsString, IsNotEmpty, Matches, IsDate } from 'class-validator';
+import { IsString, IsNotEmpty, Matches, IsDate, IsDefined } from 'class-validator';
 export class Insumos {
     constructor(id_insumo, nombre_insumo, unidad_medida, precio_unidad, fecha, proveedor) {
         this.id_insumo = id_insumo;
@@ -21,6 +21,7 @@ export class Insumos {
 }
 __decorate([
     Expose({ name: 'id_insumo' }),
+    IsDefined({ message: () => { throw { status: 400, message: "El campo id_insumo debe ser valido" }; } }),
     Transform(({ value }) => {
         if (Math.floor(value) && typeof value === 'number')
             return Math.floor(value);
@@ -84,3 +85,9 @@ __decorate([
     Matches(/^[0-9]+[a-zA-Z0-9\s\-\,]*$/, { message: "" }),
     __metadata("design:type", String)
 ], Insumos.prototype, "proveedor", void 0);
+class idInsumo {
+}
+__decorate([
+    IsNotEmpty(),
+    __metadata("design:type", Number)
+], idInsumo.prototype, "id_insumo", void 0);

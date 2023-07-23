@@ -1,6 +1,7 @@
 import { Router, query } from "express";
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
+import proxyRegistros from "../middleware/Proxyregistros.js";
 
 let storageRegistros = Router();
 dotenv.config();
@@ -20,7 +21,7 @@ storageRegistros.get("/", (req,res)=>{
     );
 
 })
-storageRegistros.post("/",(req,res)=>{
+storageRegistros.post("/",proxyRegistros,(req,res)=>{
     const {fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos}=req.body;
 
     conex.query(`INSERT INTO registros_produccion (fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos) VALUES (?,?,?,?,?)`,

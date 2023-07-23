@@ -36,8 +36,8 @@ storageInventario.post("/",proxyInventarios,(req,res)=>{
         }
     )
 })
-storageInventario.put('/:id', (req,res)=>{
-    const id_inventario = req.params.id;
+storageInventario.put('/:id_inventario', (req,res)=>{
+    const id_inventario = req.params.id_inventario;
     const {cantidad_stock,id_producto}=req.body;
     console.log(id_inventario, cantidad_stock, id_producto);
     conex.query(
@@ -45,14 +45,35 @@ storageInventario.put('/:id', (req,res)=>{
     [cantidad_stock,id_producto,id_inventario],
     (error, result) => {
         if (error) {
-          console.error('Error al actualizar el insumo:', error);
-          res.status(500).send('Error al actualizar el insumo en la base de datos.');
+          console.error('Error al actualizar el inventario:', error);
+          res.status(500).send('Error al actualizar el inventario en la base de datos.');
         } else {
-          res.status(200).send('Insumo actualizado correctamente.');
+          res.status(200).send('Inventario actualizado correctamente.');
         }
       }
 
     )
 
+})
+
+
+storageInventario.delete('/deleteinventario',(req,res)=>{
+    const id_inventario = req.body.idDelete;
+    console.log(id_inventario);
+    conex.query(
+        `DELETE FROM inventario WHERE id_inventario = ${id_inventario};`,
+        (err,data,fill)=>{
+            if(err){
+                const errorMessage = `Error al eliminar la data`;
+                res.status(500).send(err);
+            }else{
+                if (data.affectedRows === 0){
+                    res.status(404).send("el inventario solicitado no existe");
+                }else{
+                    res.send("Los datos han sido eliminados con exito");
+                }
+            }
+        }
+    )
 })
 export default storageInventario;

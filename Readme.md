@@ -1,4 +1,4 @@
-​	**Objetivos**
+	**Objetivos**
 
 1. Desarrollar un sistema integral de costos de producción para el emprendimiento SubliTransfer, que permita determinar con precisión el costo de cada producto, como mugs, caramañolas, gorras y otros productos ofrecidos por la empresa. Además, se busca mantener un inventario actualizado de las cantidades disponibles en la empresa.
 
@@ -11,4 +11,146 @@
    **Diagrama**
 
    ![image-20230717092047292](https://github.com/StivenCarvajalCampus/proyectoproduccion/blob/master/imagenes/Diagrama%20en%20blanco.png)
+   
+   
 
+------
+
+​																			**Uso** 
+
+Para iniciar la insercion de datos podemos iniciar podemos empezar insertando los datos de la tabla productos donde unidad_medida hace referencia a cuantas unidades existen de ese producto (mugs, botilitos, cuadros, esferos etc...) igualmente en la tabla insumos (tintas, hojas, cinta etc...) teniendo en cuenta que son las tablas principales para asi luego poder insertar en tabla categoria_producto que hace referencia a los diferentes tipos de productos e insumos que ofrece la empresa sublitransfer en la tabla inventario encontraremos la cantidad de stock con un id_producto que hace referencia a la tabla productos donde vemos la cantidad disponible de cada producto en la empresa, por ultimo tenemos la tabla registro_produccion donde vamos a registrar la cantidad de productos sublimados y sacados a la venta con el fin de tener un registro con fechas de la salida de material ya listo para la venta.
+
+ 
+
+------
+
+**End-points**
+
+**registros_produccion:**
+			1.**Get:** http://127.100.2.1:5015/registros 
+
+​			**2.Post**: http://127.100.2.1:5015/registros => body:
+
+		    {
+	"id_registro": 2,
+	"fecha_produccion": "2023-08-21T05:00:00.000Z",
+	"id_producto": 1,
+	"cantidad_producida": 5,
+	"costo_total_producto": 8000,
+	"id_insumos": 1
+	}
+
+​				**3.Put:** http://127.100.2.1:5015/registros/2 para hacer uso de este endpoint pasamos los parametros de igual forma que en el body anterior
+
+​					**4.Delete:** http://127.100.2.1:5015/registros/deleteregistro 
+​					Body: "idDelete": 1 aqui va el numero de id que desee borrar
+
+------
+
+
+
+**insumos:** 
+
+​				**1.Get:** http://127.100.2.1:5015/insumos
+
+​				**2.Post:** http://127.100.2.1:5015/insumos 
+
+​				**3.Put:** http://127.100.2.1:5015/insumos/2  pasamos el id del dato que queremos cambiar 
+
+​				**4.Delete:** http://127.100.2.1:5015/insumos/deleteinsumo 
+
+**Body:**  para post y put usamos este body 
+
+` {
+   "id_insumo":1,
+    "nombre_insumo": "cerveceros",
+    "unidad_medida": 22,
+    "precio_unidad": 40000,
+    "fecha": "2023-07-19T05:00:00.000Z",
+    "proveedor": "Ao importaciones"
+  }`
+
+**Body Delete:** 
+
+{
+  "idDelete":"1"
+}
+
+------
+
+**Productos:**  
+
+​						**1.Get:** http://127.100.2.1:5015/productos
+
+​						**2.Post:** http://127.100.2.1:5015/productos
+
+​						**3.Put:** http://127.100.2.1:5015/productos/6 pasamos el id del dato que queremos cambiar 
+
+​						**4.Delete:** http://127.100.2.1:5015/productos/deleteproductos 
+
+**Body:**  para post y put usamos este body 
+
+`{
+  "id_producto": 6,
+    "nombre_producto": "mug 11oz",
+    "descripcion": "mug magico 11 oz",
+    "precio_venta": 10000,
+    "unidad_medida": 36
+}`
+
+**Body Delete:** 
+
+{
+  "idDelete":"1"
+}
+
+------
+
+**Inventario:** 
+
+​						**1.Get:** http://127.100.2.1:5015/inventario
+
+​						**2.Post:** http://127.100.2.1:5015/inventario
+​						**3.Put:** http://127.100.2.1:5015/inventario/3
+
+​						**4.Delete:** http://127.100.2.1:5015/inventario/deleteinventario
+
+**Body:**  para post y put usamos este body 
+
+`{
+   "id_inventario": 1,
+    "cantidad_stock": 36,
+    "id_producto": 1
+}`
+
+**Body Delete:** 
+
+{
+  "idDelete":"1"
+}
+
+------
+
+**Categoria:** 
+
+​						**1.Get:** http://127.100.2.1:5015/categoria
+
+​						**2.Post:** http://127.100.2.1:5015/categoria
+
+​						**3.Put:** http://127.100.2.1:5015/categoria/6
+
+​						**4.Delete:** http://127.100.2.1:5015/categoria/deletecategoria
+
+**Body:**  para post y put usamos este body 
+
+`{
+    "id_categoria": 2,
+    "nombre_categoria": "botilitos",
+    "id_producto": 2
+  }`
+
+**Body Delete:** 
+
+{
+  "idDelete":"1"
+}

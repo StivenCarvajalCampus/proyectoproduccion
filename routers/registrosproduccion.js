@@ -2,6 +2,7 @@ import { Router, query } from "express";
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
 import proxyRegistros from "../middleware/Proxyregistros.js";
+import { validateToken } from "./jwt.js";
 
 let storageRegistros = Router();
 dotenv.config();
@@ -11,7 +12,7 @@ storageRegistros.use((req,res,next)=>{
     conex = mysql.createPool(my_config);
     next();
 })
-storageRegistros.get("/", (req,res)=>{
+storageRegistros.get("/",validateToken, (req,res)=>{
     conex.query(
         `SELECT * FROM registros_produccion INNER JOIN productos ON registros_produccion.id_producto = productos.id_producto INNER JOIN insumos ON registros_produccion.id_insumos = insumos.id_insumo`,
         (err,data,fill)=>{
@@ -21,7 +22,7 @@ storageRegistros.get("/", (req,res)=>{
     );
 
 })
-storageRegistros.post("/",proxyRegistros,(req,res)=>{
+storageRegistros.post("/",proxyRegistros,validateToken,(req,res)=>{
     const {fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos}=req.body;
 
     conex.query(`INSERT INTO registros_produccion (fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos) VALUES (?,?,?,?,?)`,
@@ -36,7 +37,7 @@ storageRegistros.post("/",proxyRegistros,(req,res)=>{
         }
     )
 })
-storageRegistros.put('/:id_registro', (req,res)=>{
+storageRegistros.put('/:id_registro',validateToken, (req,res)=>{
     const id_registro = req.params.id_registro;
     const {fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos}=req.body;
     conex.query(`UPDATE registros_produccion SET fecha_produccion = ?, id_producto=?, cantidad_producida=?, costo_total_producto=?, id_insumos=? WHERE id_registro=?;`,
@@ -53,7 +54,7 @@ storageRegistros.put('/:id_registro', (req,res)=>{
     )
 
 })
-storageRegistros.delete('/deleteregistro',(req,res)=>{
+storageRegistros.delete('/deleteregistro',validateToken,(req,res)=>{
     const id_registro = req.body.idDelete;
     conex.query(
         `DELETE FROM registros_produccion WHERE id_registro = ${id_registro};`,

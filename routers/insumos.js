@@ -2,6 +2,7 @@ import { Router, query } from "express";
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
 import proxyInsumos from "../middleware/Proxyinsumos.js";
+import { validateToken } from "./jwt.js";
 
 let storageInsumos = Router();
 dotenv.config();
@@ -11,7 +12,7 @@ storageInsumos.use((req,res,next)=>{
     conex = mysql.createPool(my_config);
     next();
 })
-storageInsumos.get("/", (req,res)=>{
+storageInsumos.get("/",validateToken, (req,res)=>{
     conex.query(
         `SELECT * FROM insumos`,
         (err,data,fill)=>{
@@ -21,7 +22,7 @@ storageInsumos.get("/", (req,res)=>{
     );
 
 })
-storageInsumos.post("/",proxyInsumos,(req,res)=>{
+storageInsumos.post("/",proxyInsumos,validateToken,(req,res)=>{
     const {nombre_insumo, unidad_medida, precio_unidad, fecha, proveedor}=req.body;
 
     conex.query(`INSERT INTO insumos (nombre_insumo, unidad_medida, precio_unidad, fecha, proveedor) VALUES (?,?,?,?,?)`,
@@ -36,7 +37,7 @@ storageInsumos.post("/",proxyInsumos,(req,res)=>{
         }
     )
 })
-storageInsumos.put('/:id_insumo', (req,res)=>{
+storageInsumos.put('/:id_insumo',validateToken, (req,res)=>{
     const id_insumo = req.params.id_insumo;
     const {nombre_insumo, unidad_medida, precio_unidad, fecha, proveedor}=req.body;
     conex.query(`UPDATE insumos SET nombre_insumo=?, unidad_medida=?, precio_unidad=?, fecha=?, proveedor=? WHERE id_insumo=?;`,
@@ -53,7 +54,7 @@ storageInsumos.put('/:id_insumo', (req,res)=>{
     )
 
 })
-storageInsumos.delete('/deleteinsumo',(req,res)=>{
+storageInsumos.delete('/deleteinsumo', validateToken,(req,res)=>{
     const id_insumo = req.body.idDelete;
     console.log(id_insumo);
     conex.query(

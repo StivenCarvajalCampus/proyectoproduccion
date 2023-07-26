@@ -79,6 +79,12 @@ Además de esto, es necesario que los paquetes usados fueron las siguientes:
 
 **End-points**
 
+para empezar a ejecutar end points primero tiene que generar un token con el siguiente end point: 
+
+**jwt Token**: http://127.100.2.1:5015/jwt/token/1
+
+el resultado que nos aparece entre comillas lo vamos a poner en Headers en thunder client en el primer campo a la izquierda ponemos authorization y en el campo de enfrente ponemos el token generado.
+
 **registros_produccion:**
 			1.**Get:** http://127.100.2.1:5015/registros 
 

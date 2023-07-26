@@ -2,6 +2,7 @@ import { Router, query } from "express";
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
 import proxyInventarios from "../middleware/Proxyinventarios.js";
+import { validateToken } from "./jwt.js";
 
 let storageInventario = Router();
 dotenv.config();
@@ -11,7 +12,7 @@ storageInventario.use((req,res,next)=>{
     conex = mysql.createPool(my_config);
     next();
 })
-storageInventario.get("/", (req,res)=>{
+storageInventario.get("/",validateToken,  (req,res)=>{
     conex.query(
         `SELECT * FROM inventario INNER JOIN productos ON inventario.id_producto = productos.id_producto`,
         (err,data,fill)=>{
@@ -21,7 +22,7 @@ storageInventario.get("/", (req,res)=>{
     );
 
 })
-storageInventario.post("/",proxyInventarios,(req,res)=>{
+storageInventario.post("/",proxyInventarios,validateToken,(req,res)=>{
     const {cantidad_stock,id_producto}=req.body;
 
     conex.query(`INSERT INTO inventario (cantidad_stock, id_producto) VALUES (?,?)`,
@@ -36,7 +37,7 @@ storageInventario.post("/",proxyInventarios,(req,res)=>{
         }
     )
 })
-storageInventario.put('/:id_inventario', (req,res)=>{
+storageInventario.put('/:id_inventario',validateToken, (req,res)=>{
     const id_inventario = req.params.id_inventario;
     const {cantidad_stock,id_producto}=req.body;
     console.log(id_inventario, cantidad_stock, id_producto);
@@ -57,7 +58,7 @@ storageInventario.put('/:id_inventario', (req,res)=>{
 })
 
 
-storageInventario.delete('/deleteinventario',(req,res)=>{
+storageInventario.delete('/deleteinventario',validateToken,(req,res)=>{
     const id_inventario = req.body.idDelete;
     console.log(id_inventario);
     conex.query(

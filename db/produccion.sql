@@ -1,3 +1,4 @@
+
 CREATE DATABASE produccion; 
 USE produccion;
 CREATE TABLE productos (
@@ -7,7 +8,6 @@ CREATE TABLE productos (
     precio_venta DECIMAL,
     unidad_medida INT (20) DEFAULT NULL  
 );
-DROP TABLE productos;
 CREATE TABLE insumos (
     id_insumo INT(20) PRIMARY KEY AUTO_INCREMENT,
     nombre_insumo VARCHAR(50) DEFAULT NULL,
@@ -18,7 +18,6 @@ CREATE TABLE insumos (
 
 );
 
-DROP TABLE insumos;
 CREATE TABLE inventario (
     id_inventario INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     cantidad_stock INT(20) DEFAULT NULL,
@@ -29,23 +28,19 @@ CREATE TABLE categoria_producto(
     nombre_categoria VARCHAR(50) DEFAULT NULL,
     id_producto INT (20) 
 );
-DROP TABLE categoria_producto;
 CREATE TABLE registros_produccion(
     id_registro INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     fecha_produccion DATE,
     id_producto INT (20) DEFAULT NULL,
-    camtidad_producida INT (20) DEFAULT NULL,
+    cantidad_producida INT (20) DEFAULT NULL,
     costo_total_producto DECIMAL,
     id_insumos INT(20) DEFAULT NULL
 );
 ALTER TABLE categoria_producto
 ADD CONSTRAINT fk_categoria FOREIGN KEY (id_producto) REFERENCES productos(id_producto);
-ALTER TABLE categoria_producto
-ADD CONSTRAINT fk_categoria FOREIGN KEY (id_producto) REFERENCES productos(id_producto);
 ALTER TABLE inventario ADD CONSTRAINT fk_inventario FOREIGN KEY(id_producto) REFERENCES productos(id_producto);
 ALTER TABLE registros_produccion ADD CONSTRAINT fk_registros FOREIGN KEY (id_producto) REFERENCES productos (id_producto);
 ALTER TABLE registros_produccion ADD CONSTRAINT fk_insumos_r FOREIGN KEY (id_insumos) REFERENCES insumos (id_insumo);
-ALTER TABLE `registros_produccion` CHANGE `camtidad_producida` `cantidad_producida` INT(20) NULL DEFAULT NULL;
 
 /* Inserciones a base de datos*/
 

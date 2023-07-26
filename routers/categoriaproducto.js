@@ -2,6 +2,8 @@ import { Router, query } from "express";
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
 import proxyCategoria from "../middleware/Proxycategoria.js";
+import { validate } from "class-validator";
+import { validateToken } from "./jwt.js";
 
 let storageCategoria = Router();
 dotenv.config();
@@ -11,7 +13,7 @@ storageCategoria.use((req,res,next)=>{
     conex = mysql.createPool(my_config);
     next();
 })
-storageCategoria.get("/", (req,res)=>{
+storageCategoria.get("/",validateToken, (req,res)=>{
     conex.query(
         `SELECT * FROM categoria_producto INNER JOIN productos ON categoria_producto.id_producto = productos.id_producto`,
         (err,data,fill)=>{
@@ -21,12 +23,11 @@ storageCategoria.get("/", (req,res)=>{
     );
 
 })
-storageCategoria.post("/",proxyCategoria,(req,res)=>{
+storageCategoria.post("/",validateToken,proxyCategoria,(req,res)=>{
     const {nombre_categoria,id_producto}=req.body;
 
     conex.query(`INSERT INTO categoria_producto (nombre_categoria, id_producto) VALUES (?,?)`,
     [nombre_categoria, id_producto],
-    console.log(nombre_categoria),
     (err,data,fill)=>{
         if(err){
             console.log(err)
@@ -37,7 +38,7 @@ storageCategoria.post("/",proxyCategoria,(req,res)=>{
         }
     )
 })
-storageCategoria.put('/:id_categoria', (req,res)=>{
+storageCategoria.put('/:id_categoria',validateToken, (req,res)=>{
     const id_categoria = req.params.id_categoria;
     const {nombre_categoria,id_producto}=req.body;
     console.log(nombre_categoria,id_producto,id_categoria);
@@ -56,7 +57,7 @@ storageCategoria.put('/:id_categoria', (req,res)=>{
     )
 
 })
-storageCategoria.delete('/deletecategoria',(req,res)=>{
+storageCategoria.delete('/deletecategoria',validateToken,(req,res)=>{
     const id_categoria = req.body.idDelete;
     console.log(id_categoria);
     conex.query(

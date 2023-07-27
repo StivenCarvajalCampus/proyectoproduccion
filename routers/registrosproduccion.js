@@ -22,11 +22,11 @@ storageRegistros.get("/",validateToken, (req,res)=>{
     );
 
 })
-storageRegistros.post("/",proxyRegistros,validateToken,(req,res)=>{
-    const {fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos}=req.body;
-
-    conex.query(`INSERT INTO registros_produccion (fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos) VALUES (?,?,?,?,?)`,
-    [fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos],
+storageRegistros.post("/",proxyRegistros, validateToken,(req,res)=>{
+    const data = req.body;
+    console.log(data)
+    conex.query(`INSERT INTO registros_produccion (id_registro,fecha_produccion, id_producto, cantidad_producida, costo_total_producto, id_insumos) VALUES (?,?,?,?,?,?)`,
+    Object.values(data),
     (err,data,fill)=>{
         if(err){
             console.log(err)

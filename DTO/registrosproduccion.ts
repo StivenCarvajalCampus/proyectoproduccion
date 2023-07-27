@@ -3,33 +3,28 @@ import {  IsNotEmpty, IsDate,IsDefined } from 'class-validator';
 
 
 export class Registros{
-
-    @Expose({name: 'id_registro'}) 
-    @IsDefined({message:()=>{throw{status:400,message:"El campo id_registros es obligatorio"}} })
-    @Transform(
-        ({value})=>{
-            if(Math.floor(value) && typeof value === 'number') return Math.floor(value);
-            else throw { status: 400, message: "El dato id_registro no cumple con los parametros establecidos"};
-        },{toClassOnly: true})
-    id_registro: number;
+    @Expose({name: "id_registro"})
+    @Type(() => Number)
+    reg: number
     
     @Expose({ name: 'fecha_produccion' })
-    @Type(() => Date) // Indicamos que el campo debe ser tratado como tipo Date
+    @Type(() => String) // Indicamos que el campo debe ser tratado como tipo Date
     @Transform(({ value }) => {
-      const fecha = new Date(value);
-      if (isNaN(fecha.getTime())) {
+      if (/^\d{4}\/(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])$/.test(value)) {
         throw {
           status: 400,
           message: "El parámetro 'fecha_produccion' no es una fecha válida.",
         };
       }
-      return fecha;
+      return value;
     })
+    fch_pr: string 
+
     @Expose({name: 'id_producto'})
     @IsDefined({message:()=>{throw{status:400,message:"El campo id_producto es obligatorio"}} })
     @Transform(
         ({value})=>{
-            if(Math.floor(value) && typeof value === 'number') return Math.floor(value);
+            if(Math.floor(value) ) return Math.floor(value);
             else throw { status: 400, message: "El dato id_producto no cumple con los parametros establecidos"};
         },{toClassOnly: true})
     id_producto: number;
@@ -48,10 +43,7 @@ export class Registros{
          else throw {status:400, message:"El parametro costo producto no cumple con las condiciones necesarias"};
     },{toClassOnly:true})
     costo_total_producto:number;
-   
-    @IsNotEmpty({ message: "El campo 'fecha' no puede estar vacío." })
-    @IsDate({ message: "El campo 'fecha' debe ser una fecha válida." })
-    fecha: Date;
+
 
     @Expose({name: 'id_insumos'})
     @Transform(
@@ -62,15 +54,15 @@ export class Registros{
 
     
     constructor(
-        id_registro:number,
-        fecha:Date,
+        reg: number,
+        fecha: string,
         id_producto:number,
         cantidad_producida:number,
         costo_total_producto:number,
         id_insumos:number
     ){
-        this.id_registro = id_registro;
-        this.fecha = fecha;
+        this.reg = reg
+        this.fch_pr = fecha
         this.id_producto= id_producto;
         this.cantidad_producida = cantidad_producida;
         this.costo_total_producto = costo_total_producto;

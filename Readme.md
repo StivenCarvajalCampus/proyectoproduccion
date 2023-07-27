@@ -92,14 +92,14 @@ el resultado que nos aparece entre comillas lo vamos a poner en Headers en thund
 
 		    {
 	"id_registro": 2,
-	"fecha_produccion": "2023-08-21T05:00:00.000Z",
+	"fecha_produccion": "2023-08-21",
 	"id_producto": 1,
 	"cantidad_producida": 5,
 	"costo_total_producto": 8000,
 	"id_insumos": 1
 	}
 
-​				**3.Put:** http://127.100.2.1:5015/registros/2 para hacer uso de este endpoint pasamos los parametros de igual forma que en el body anterior
+​				**3.Put:** http://127.100.2.1:5015/registros/2 para hacer uso de este endpoint pasamos los parametros de igual forma que en el body anterior dando en fecha el formato yy/mm/dd
 
 ​					**4.Delete:** http://127.100.2.1:5015/registros/deleteregistro 
 ​					Body: "idDelete": 1 aqui va el numero de id que desee borrar
@@ -125,7 +125,7 @@ el resultado que nos aparece entre comillas lo vamos a poner en Headers en thund
     "nombre_insumo": "cerveceros",
     "unidad_medida": 22,
     "precio_unidad": 40000,
-    "fecha": "2023-07-19T05:00:00.000Z",
+    "fecha": "2023-07-19",
     "proveedor": "Ao importaciones"
   }`
 
